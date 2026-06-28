@@ -177,7 +177,6 @@ tr:nth-child(even){
 }
 </style>
 </head>
-
 <body>
 
 <div class="container">
@@ -186,8 +185,7 @@ tr:nth-child(even){
         <h1 class="h1">Security System</h1>
 
         <!-- ضع اللوجو الخاص بك هنا -->
-        <img src="WhatsApp_Image_2026-06-23_at_11.17.44_AM-removebg-preview.png"
-        class="logo">
+        <img src="WhatsApp_Image_2026-06-23_at_11.17.44_AM-removebg-preview.png" class="logo">
     </div>
 
     <div class="form-grid">
@@ -245,15 +243,14 @@ tr:nth-child(even){
     <h2>Search</h2>
 
     <div class="search-box">
-        <input type="text" id="searchId"
-        placeholder="Search by National ID">
+        <input type="text" id="searchId" placeholder="Search by National ID">
         <button onclick="searchById()">Search ID</button>
     </div>
 
     <div class="search-box">
-        <input type="text" id="searchSector"
-        placeholder="Search by Sector">
-        <button onclick="searchBySector()">Search Sector</button>
+        <input type="date" id="searchDate">
+        <input type="time" id="searchTime">
+        <button onclick="searchByDateTime()">Search</button>
     </div>
 
     <div class="buttons">
@@ -378,23 +375,32 @@ function searchById(){
     }
 }
 
-function searchBySector(){
-    let value =
-    document.getElementById("searchSector")
-    .value.toLowerCase().trim();
+function searchByDateTime(){
+
+    let date =
+    document.getElementById("searchDate").value;
+
+    let time =
+    document.getElementById("searchTime").value;
 
     let rows =
     document.querySelector("#report tbody").rows;
 
     for(let i=0;i<rows.length;i++){
-        let sector =
-        rows[i].cells[2].textContent.toLowerCase();
+
+        let entryDate = rows[i].cells[3].textContent;
+        let entryTime = rows[i].cells[4].textContent;
+
+        let matchDate =
+        date === "" || entryDate === date;
+
+        let matchTime =
+        time === "" || entryTime === time;
 
         rows[i].style.display =
-        sector.includes(value) ? "" : "none";
+        (matchDate && matchTime) ? "" : "none";
     }
 }
-
 function showAll(){
     let rows =
     document.querySelector("#report tbody").rows;
@@ -413,6 +419,6 @@ function clearAllData(){
 }
 </script>
 
+
 </body>
 </html>
-
